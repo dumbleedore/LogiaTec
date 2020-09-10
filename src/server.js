@@ -16,6 +16,7 @@ mongoose.connect('mongodb+srv://lucas:lucas@logiatec.i80qw.gcp.mongodb.net/users
 
 app.use('/api/', require('./routes'))
 
+
 app.listen(process.env.PORT || 5000,()=>{
     console.log('Running on http://localhost:5000')
 });

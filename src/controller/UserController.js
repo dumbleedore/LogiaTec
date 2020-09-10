@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const mongoose = require('mongoose')
 
 
 module.exports = {
@@ -10,6 +9,11 @@ module.exports = {
     async addUser(req,res){
         const user = await User.create(req.body)
         return res.json(user)
+    },
+    async removeUser(req,res){
+        const user = await User.findByIdAndDelete(req.params.id)
+        return res.json(user)
     }
+
 
 }
