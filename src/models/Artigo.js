@@ -1,25 +1,18 @@
-const mongoose = require('mongoose')
-const User = require('./User')
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('logiatec', 'root', 'lu09051998', {
+  host: 'localhost',
+  dialect: 'mysql',
+});
 
-ArtigoSchema = mongoose.Schema({
-    owner : {
-        type : Number
-    },
-    title : {
-        type : String,
-        required : true
-    },
-    description : {
-        type : String,
-        required:true
-    },
-    buildAt: {
-        type : Date,
-        default : Date.now()
-    }
+const Artigo = sequelize.define('artigo', {
+  title: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
+  sobre: {
+    type: DataTypes.STRING(500),
+    allowNull: false,
+  },
+});
 
-})
-
-const Artigo = mongoose.model("artigo",ArtigoSchema)
-module.exports = Artigo
-
+module.exports = Artigo;

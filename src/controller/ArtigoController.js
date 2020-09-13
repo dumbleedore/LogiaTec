@@ -1,12 +1,9 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const Artigo = require('../models/Artigo')
+const express = require('express');
+const Artigo = require('../models/Artigo');
 
 module.exports = {
-    async getArtigos(req,res){
-        const artigo = await Artigo.find()
-        return res.json(artigo)
-    }
-}
-
-
+  async getArtigos(req, res) {
+    const artigo = await Artigo.findAll();
+    return res.json(artigo);
+  },
+};
