@@ -6,8 +6,17 @@ const { Sequelize, DataTypes } = require('sequelize');
 const artigo = require('./models/Artigo');
 const user = require('./models/User');
 
-// CONNECTING TO THE DATABASE
+// ARUMANDO CORS PARA PODER PUXAR DADOS DA API
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 
+// CONNECTING TO THE DATABASE
 const sequelize = new Sequelize('logiatec', 'root', 'lu09051998', {
   host: 'localhost',
   dialect: 'mysql',
@@ -19,14 +28,10 @@ try {
 } catch (error) {
   console.error('Unable to connect to the database:', error);
 }
-// CRIANDO OS MODELOS DO BD
 
-/* user.hasMany(artigo);
-artigo.belongsTo(user);
-user.sync();
+/* user.sync();
 artigo.sync();
  */
-
 app.use('/api/', require('./routes'));
 
 app.listen(process.env.PORT || 5000, () => {

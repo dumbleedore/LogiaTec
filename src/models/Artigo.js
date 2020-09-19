@@ -3,6 +3,7 @@ const sequelize = new Sequelize('logiatec', 'root', 'lu09051998', {
   host: 'localhost',
   dialect: 'mysql',
 });
+const user = require('./User');
 
 const Artigo = sequelize.define('artigo', {
   title: {
@@ -11,6 +12,12 @@ const Artigo = sequelize.define('artigo', {
   },
   sobre: {
     type: DataTypes.STRING(500),
+    allowNull: false,
+  },
+});
+
+user.hasMany(Artigo, {
+  foreignKey: {
     allowNull: false,
   },
 });

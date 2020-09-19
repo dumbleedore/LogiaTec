@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, INTEGER } = require('sequelize');
 const artigo = require('./Artigo');
 const { primaryKeyAttribute } = require('./Artigo');
 const sequelize = new Sequelize('logiatec', 'root', 'lu09051998', {

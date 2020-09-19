@@ -14,6 +14,7 @@ module.exports = {
       username: req.body.username,
       password: hashPassword,
     });
+    return res.json(newUser);
   },
   async removeUser(req, res) {
     const user = await User.findByPk(req.params.id);
