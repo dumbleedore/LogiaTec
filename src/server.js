@@ -28,7 +28,7 @@ try {
 } catch (error) {
   console.error('Unable to connect to the database:', error);
 }
-
+// CREATING TABLES
 /* user.sync();
 artigo.sync();
  */
