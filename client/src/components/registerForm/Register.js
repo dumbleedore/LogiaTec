@@ -46,7 +46,7 @@ const Register = () => {
         <div id="formContent">
           {cond && (
             <div class="alert alert-success" role="alert">
-              Cadastro feito com sucesso!!!
+              Cadastro feito com sucesso!
             </div>
           )}
           <div className="fadeIn first"></div>

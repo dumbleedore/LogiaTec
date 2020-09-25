@@ -29,9 +29,9 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 // CREATING TABLES
-/* user.sync();
+//user.sync();
 artigo.sync();
- */
+
 app.use('/api/', require('./routes'));
 
 app.listen(process.env.PORT || 5000, () => {

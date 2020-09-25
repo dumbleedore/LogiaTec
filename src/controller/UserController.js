@@ -13,6 +13,8 @@ module.exports = {
     const newUser = await User.create({
       username: req.body.username,
       password: hashPassword,
+      name: req.body.name,
+      email: req.body.email,
     });
     return res.json(newUser);
   },
