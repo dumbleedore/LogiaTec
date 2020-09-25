@@ -1,12 +1,13 @@
 import React from 'react';
 import './registerstyle.css';
-import { useHistory } from 'react-router-dom';
 const Register = () => {
   const [cond, setCond] = React.useState(false);
   function handleClick() {
     // POST request using fetch()
     const user = document.getElementById('login').value;
     const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value;
     console.log(user, password);
     fetch('http://localhost:5000/api//users/add', {
       // Adding method type
@@ -16,6 +17,8 @@ const Register = () => {
       body: JSON.stringify({
         username: user,
         password: password,
+        email: email,
+        name: name,
       }),
 
       // Adding headers to the request
@@ -30,6 +33,8 @@ const Register = () => {
       .then((json) => console.log(json));
     document.getElementById('login').value = null;
     document.getElementById('password').value = null;
+    document.getElementById('email').value = null;
+    document.getElementById('name').value = null;
     setCond(true);
     setTimeout(() => {
       setCond(false);
@@ -45,18 +50,30 @@ const Register = () => {
             </div>
           )}
           <div className="fadeIn first"></div>
+          <input
+            type="text"
+            id="name"
+            className="fadeIn second"
+            placeholder="Nome"
+          />
 
           <input
             type="text"
             id="login"
             className="fadeIn second"
-            placeholder="login"
+            placeholder="Username"
           />
           <input
-            type="text"
+            type="password"
             id="password"
             className="fadeIn third"
-            placeholder="password"
+            placeholder="Password"
+          />
+          <input
+            type="email"
+            id="email"
+            className="fadeIn third"
+            placeholder="Email"
           />
           <input
             type="submit"
