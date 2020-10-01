@@ -1,12 +1,16 @@
 const { Sequelize, DataTypes, INTEGER } = require('sequelize');
 const artigo = require('./Artigo');
 const { primaryKeyAttribute } = require('./Artigo');
-const sequelize = new Sequelize('logiatec', 'root', 'lu09051998', {
+const sequelize = new Sequelize('logiatec', 'root', 'lucas0905', {
   host: 'localhost',
   dialect: 'mysql',
 });
 
 const User = sequelize.define('user', {
+  nome: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
   username: {
     type: DataTypes.STRING(100),
     allowNull: false,
@@ -18,9 +22,6 @@ const User = sequelize.define('user', {
   email: {
     type: DataTypes.STRING(200),
     allowNull: false,
-  },
-  name: {
-    type: DataTypes.STRING(100),
   },
 });
 

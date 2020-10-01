@@ -6,6 +6,9 @@ const { Sequelize, DataTypes } = require('sequelize');
 const artigo = require('./models/Artigo');
 const user = require('./models/User');
 
+require('dotenv-safe').config();
+var jwt = require('jsonwebtoken');
+
 // ARUMANDO CORS PARA PODER PUXAR DADOS DA API
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -17,7 +20,7 @@ app.use(function (req, res, next) {
 });
 
 // CONNECTING TO THE DATABASE
-const sequelize = new Sequelize('logiatec', 'root', 'lu09051998', {
+const sequelize = new Sequelize('logiatec', 'root', 'lucas0905', {
   host: 'localhost',
   dialect: 'mysql',
 });
@@ -29,9 +32,9 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 // CREATING TABLES
-//user.sync();
+/* user.sync();
 artigo.sync();
-
+ */
 app.use('/api/', require('./routes'));
 
 app.listen(process.env.PORT || 5000, () => {

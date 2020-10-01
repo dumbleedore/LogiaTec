@@ -10,10 +10,12 @@ router.delete('/users/delete/:id', userController.removeUser);
 
 router.post('/users/add', userController.addUser);
 
+router.post('/login', userController.entrar);
+
 // ROTAS ARTIGO
 
 router.get('/artigos', artigoController.getArtigos);
 
-router.post('/add/artigos/:id', artigoController.addArtigo);
+router.post('/artigos/add/:id', artigoController.addArtigo);
 
 module.exports = router;

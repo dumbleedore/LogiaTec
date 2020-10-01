@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { findOne } = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   async findAll(req, res) {
@@ -13,7 +15,7 @@ module.exports = {
     const newUser = await User.create({
       username: req.body.username,
       password: hashPassword,
-      name: req.body.name,
+      nome: req.body.nome,
       email: req.body.email,
     });
     return res.json(newUser);
@@ -22,5 +24,26 @@ module.exports = {
     const user = await User.findByPk(req.params.id);
     User.destroy({ where: { id: user.id } });
     return res.json(user);
+  },
+
+  // AUTENTIFICAÇÃO
+  async entrar(req, res) {
+    const username = req.body.username;
+    const password = req.body.password;
+    const user = await User.findOne({ where: { username: username } });
+    if (!user) {
+      return res.status(500).send({ error: 'something is wrong!' });
+    } else {
+      const auth = bcrypt.compareSync(password, user.password);
+      if (auth) {
+        const usuario = user.id;
+        const token = jwt.sign({ usuario }, process.env.SECRET, {
+          expiresIn: 600,
+        });
+        res.json({ auth: true, token: token });
+      } else {
+        return res.status(500).send({ error: 'something is wrong!' });
+      }
+    }
   },
 };
