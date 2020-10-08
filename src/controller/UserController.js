@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const { findOne } = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -36,7 +35,7 @@ module.exports = {
     } else {
       const auth = bcrypt.compareSync(password, user.password);
       if (auth) {
-        const usuario = user.id;
+        const usuario = { username: user.username, id: user.id };
         const token = jwt.sign({ usuario }, process.env.SECRET, {
           expiresIn: 600,
         });
