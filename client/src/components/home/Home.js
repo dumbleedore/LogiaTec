@@ -1,14 +1,8 @@
 import React from 'react';
-import Navbar from '../navbar/Navbar';
 import './homestyle.css';
+import { GlobalContext } from '../GlobalContext/GlobalContext';
 export const Home = () => {
-  return (
-    <div>
-      <body className="body">
-        <Navbar />
-        <h1 className="h1">LogiaTec</h1>
-      </body>
-    </div>
-  );
+  global = React.useContext(GlobalContext);
+  return <div>{global.logado ? 'Logado' : 'Não está Logado'}</div>;
 };
 export default Home;

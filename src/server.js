@@ -5,19 +5,18 @@ app.use(bodyParser.json());
 const { Sequelize, DataTypes } = require('sequelize');
 const artigo = require('./models/Artigo');
 const user = require('./models/User');
+const cors = require('cors');
 
 require('dotenv-safe').config();
 var jwt = require('jsonwebtoken');
 
-// ARUMANDO CORS PARA PODER PUXAR DADOS DA API
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  next();
-});
+app.use(
+  cors({
+    origin: ['http://localhost:3000/'],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }),
+);
 
 // CONNECTING TO THE DATABASE
 const sequelize = new Sequelize('logiatec', 'root', 'lucas0905', {

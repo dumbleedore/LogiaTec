@@ -1,66 +1,78 @@
 import React from 'react';
 import './loginstyle.css';
-
+import { useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../GlobalContext/GlobalContext';
 export const Login = () => {
-  const [form, setForm] = React.useState({
-    username: '',
-    password: '',
-  });
+  const global = React.useContext(GlobalContext);
+  const [resposta, setResposta] = React.useState(false);
+  const navigate = useNavigate();
 
-  function handleChange({ target }) {
-    const { id, value } = target;
-    setForm({ ...form, [id]: value });
-  }
-  function handleSubmit(event, window) {
+  async function handleSubmit(event) {
     event.preventDefault();
     fetch('http://localhost:5000/api/login', {
-      // Adding method type
       method: 'POST',
 
-      // Adding body or contents to send
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        username: global.username,
+        password: global.password,
+      }),
 
-      // Adding headers to the request
       headers: {
         'Content-type': 'application/json',
       },
-    })
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((json) => {
-        localStorage.setItem('token', json.token);
-        console.log(json);
-      });
+    }).then(async (response) => {
+      console.log(response);
+      if (response.status === 500) {
+        setResposta(true);
+        setTimeout(() => {
+          setResposta(false);
+        }, 5000);
+      } else {
+        const resposta = await response.json();
+        localStorage.setItem('token', resposta.token);
+        global.setLogado(true);
+        navigate('/');
+      }
+    });
   }
 
   return (
-    <div className="wrapper fadeInDown">
-      <div id="formContent">
-        <form onSubmit={handleSubmit}>
-          <div className="fadeIn first"></div>
-          <input
-            type="text"
-            id="username"
-            className="fadeIn second"
-            placeholder="Username"
-            value={form.username}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            id="password"
-            className="fadeIn third"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
+    <div>
+      {resposta && (
+        <div className="alert alert-danger" role="alert">
+          Seu username ou sua senha estão incorretos.
+        </div>
+      )}
+      <div className="wrapper fadeInDown">
+        <div id="formContent">
+          <form onSubmit={handleSubmit}>
+            <div className="fadeIn first"></div>
+            <input
+              type="text"
+              id="username"
+              className="fadeIn second"
+              placeholder="Username"
+              value={global.username}
+              onChange={(event) => {
+                global.setUsername(event.target.value);
+              }}
+              required
+            />
+            <input
+              type="password"
+              id="password"
+              className="fadeIn third"
+              placeholder="Password"
+              value={global.password}
+              onChange={(event) => {
+                global.setPassword(event.target.value);
+              }}
+              required
+            />
 
-          <input type="submit" className="fadeIn fourth" value="Register" />
-        </form>
+            <input type="submit" className="fadeIn fourth" value="Login" />
+          </form>
+        </div>
       </div>
     </div>
   );

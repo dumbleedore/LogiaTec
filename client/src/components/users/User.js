@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './style.css';
 export const User = () => {
   const [user, setUser] = React.useState(null);
 
