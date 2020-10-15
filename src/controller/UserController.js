@@ -11,13 +11,21 @@ module.exports = {
     // HASHING THE PASSWORD
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
+    const usermail = await User.findAll();
+
+    // Verificando se já existe um email cadastrado
+    for (var prop in usermail) {
+      if (req.body.email === usermail[prop].email) {
+        return res.json('Email já cadastrado.');
+      }
+    }
     const newUser = await User.create({
       username: req.body.username,
       password: hashPassword,
       nome: req.body.nome,
       email: req.body.email,
     });
-    return res.json(newUser);
+    return res.json('Cadastrado com sucesso!');
   },
   async removeUser(req, res) {
     const user = await User.findByPk(req.params.id);

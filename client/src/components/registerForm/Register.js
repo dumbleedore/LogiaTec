@@ -2,6 +2,7 @@ import React from 'react';
 import './registerstyle.css';
 const Register = () => {
   const [cond, setCond] = React.useState(false);
+  const [resposta, setResposta] = React.useState();
   const [form, setForm] = React.useState({
     nome: '',
     username: '',
@@ -28,7 +29,9 @@ const Register = () => {
       .then((response) => response.json())
 
       // Displaying results to console
-      .then((json) => console.log(json));
+      .then((json) => {
+        setResposta(json);
+      });
     setCond(true);
     setTimeout(() => {
       setCond(false);
@@ -44,7 +47,7 @@ const Register = () => {
         <div id="formContent">
           {cond && (
             <div className="alert alert-success" role="alert">
-              Cadastro feito com sucesso!
+              {resposta}
             </div>
           )}
           <form onSubmit={handleSubmit}>
